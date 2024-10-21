@@ -22,17 +22,22 @@ void Student::setPerm(const int permNumber) {
 }
 
 void Student::setName(const char * const name) {
+  if(this->name != nullptr){
+    delete[] this->name;
+  }
   this->name = new char[strlen(name)+1];
   strcpy(this->name, name);
 }
 
 
 Student::Student(const Student &orig) {
+  this->name = nullptr;
   this->setName(orig.getName());
   this->setPerm(orig.getPerm());
 }
 
 Student::~Student() {
+  delete[] this->name;
 }
 
 Student & Student::operator=(const Student &right) {
@@ -42,7 +47,9 @@ Student & Student::operator=(const Student &right) {
   
   delete[] this->name;
 
-  this->setName(right.getName());
+  // this->setName(right.getName());
+  this->name = new char[strlen(right.name) + 1];
+  strcpy(this->name, right.name);
   this->setPerm(right.getPerm());
 
   // KEEP THE CODE BELOW THIS LINE
